@@ -103,6 +103,8 @@ void AyuLanguage::saveCachedLanguage(const QByteArray &json, const QString &lang
 }
 
 void AyuLanguage::fetchLanguage(const QString &id, const QString &baseId) {
+	// DarkGram: do not fetch remote AyuGram strings, use DarkGram strings
+	return;
 	auto finalLangPackId = langMapping.contains(id) ? langMapping[id] : id;
 	_currentLangId = finalLangPackId.isEmpty() ? baseId : finalLangPackId;
 
@@ -179,7 +181,10 @@ void AyuLanguage::applyLanguageJson(QJsonDocument doc) {
 	const auto json = doc.object();
 	for (const QString &brokenKey : json.keys()) {
 		auto key = qsl("ayu_") + brokenKey;
-		auto val = json.value(brokenKey).toString().replace(qsl("&amp;"), qsl("&"));
+		auto val = json.value(brokenKey).toString().replace(qsl("&amp;"), qsl("&"))
+			.replace(qsl("AyuGram"), qsl("DarkGram"))
+			.replace(qsl("ayugram"), qsl("darkgram"))
+			.replace(qsl("Ayu"), qsl("Dark"));
 
 		if (key.endsWith("_Android")) {
 			continue;

@@ -83,7 +83,7 @@ void BuildVersionInfo(SectionBuilder &builder) {
 		return {
 			.widget = object_ptr<Ui::FlatLabel>(
 				ctx.container,
-				tr::ayu_SettingsDescription(),
+				rpl::single(QString("DarkGram Desktop - Custom Dark Edition")),
 				st::centeredBoxLabel),
 			.align = style::al_top,
 		};
@@ -197,7 +197,6 @@ const auto kMeta = BuildHelper({
 	builder.addSkip();
 	BuildVersionInfo(builder);
 	BuildCategories(builder);
-	BuildLinks(builder);
 });
 
 } // namespace

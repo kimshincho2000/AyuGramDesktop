@@ -234,7 +234,6 @@ const auto kMeta = BuildHelper({
 	auto ayu = AyuSectionBuilder(builder);
 
 	builder.addSkip();
-	BuildDonations(builder);
 	BuildCrashReporting(builder, ayu);
 	BuildOtherThings(builder);
 });
