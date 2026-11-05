@@ -1,4 +1,4 @@
-// This is the source code of AyuGram for Desktop.
+﻿// This is the source code of AyuGram for Desktop.
 //
 // We do not and cannot prevent the use of our code,
 // but be respectful and credit the original author.
@@ -626,7 +626,7 @@ private:
 
 	rpl::variable<bool> _saveDeletedMessages = true;
 	rpl::variable<bool> _saveMessagesHistory = true;
-	rpl::variable<bool> _saveForBots = false;
+	rpl::variable<bool> _saveForBots = true;
 	std::unordered_set<int64> _shadowBanIds;
 	rpl::variable<bool> _filtersEnabled = false;
 	rpl::variable<bool> _filtersEnabledInChats = false;
