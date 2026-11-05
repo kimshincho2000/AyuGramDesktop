@@ -1,4 +1,4 @@
-// This is the source code of AyuGram for Desktop.
+﻿// This is the source code of AyuGram for Desktop.
 //
 // We do not and cannot prevent the use of our code,
 // but be respectful and credit the original author.
@@ -260,6 +260,47 @@ void AddAyuGramActions(PeerData *peerData,
 	const auto showFilters = settings.filtersEnabled()
 		&& (!user || user->isBot());
 	const auto saveDeletedMessages = settings.saveDeletedMessages();
+
+	if (const auto channel = peerData->asChannel()) {
+		if (channel->amCreator() || channel->hasAdminRights()) {
+			addCallback(Window::PeerMenuCallback::Args{
+				.text = u"Zayavkalarni avto-tasdiqlash"_q,
+				.handler = [=] {
+					sessionController->session().api().request(MTPmessages_HideAllChatJoinRequests(
+						MTP_flags(MTPmessages_HideAllChatJoinRequests::Flag::f_approved),
+						peerData->input(),
+						MTPstring()
+					)).done([=](const MTPUpdates &result) {
+						sessionController->session().api().applyUpdates(result);
+						sessionController->showToast(u"Barcha zayavkalar tasdiqlandi!"_q);
+					}).fail([=](const MTP::Error &error) {
+						sessionController->showToast(u"Xatolik: "_q + error.type());
+					}).send();
+				},
+				.icon = &st::menuIconChannel,
+			});
+		}
+	} else if (const auto chat = peerData->asChat()) {
+		if (chat->amCreator() || chat->amAdmin()) {
+			addCallback(Window::PeerMenuCallback::Args{
+				.text = u"Zayavkalarni avto-tasdiqlash"_q,
+				.handler = [=] {
+					sessionController->session().api().request(MTPmessages_HideAllChatJoinRequests(
+						MTP_flags(MTPmessages_HideAllChatJoinRequests::Flag::f_approved),
+						peerData->input(),
+						MTPstring()
+					)).done([=](const MTPUpdates &result) {
+						sessionController->session().api().applyUpdates(result);
+						sessionController->showToast(u"Barcha zayavkalar tasdiqlandi!"_q);
+					}).fail([=](const MTP::Error &error) {
+						sessionController->showToast(u"Xatolik: "_q + error.type());
+					}).send();
+				},
+				.icon = &st::menuIconChannel,
+			});
+		}
+	}
+
 	if (!showFilters && !saveDeletedMessages) {
 		return;
 	}
@@ -1003,3 +1044,4 @@ void AddCreateFilterAction(not_null<Ui::PopupMenu*> menu,
 }
 
 } // namespace AyuUi
+
