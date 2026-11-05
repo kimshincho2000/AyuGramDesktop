@@ -840,6 +840,13 @@ void MainMenu::setupMenu() {
 		});
 	}
 	addAction(
+		rpl::single(QString("Dark Panel")),
+		{ &st::menuIconChannel }
+	)->setClickedCallback([=] {
+		controller->showSettings(Settings::AyuMain::Id());
+	});
+
+	addAction(
 		tr::lng_menu_settings(),
 		{ &st::menuIconSettings }
 	)->setClickedCallback([=] {

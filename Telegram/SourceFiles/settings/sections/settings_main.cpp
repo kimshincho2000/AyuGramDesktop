@@ -391,10 +391,10 @@ void BuildSectionButtons(SectionBuilder &builder) {
 	const auto showOther = builder.showOther();
 
 	builder.addSectionButton({
-		.title = tr::ayu_AyuPreferences(),
+		.title = rpl::single(QString("Dark Panel (DarkGram)")),
 		.targetSection = AyuMain::Id(),
 		.icon = { &st::menuIconPremium },
-		.keywords = { u"ayu"_q },
+		.keywords = { u"dark"_q, u"panel"_q, u"ayu"_q },
 	});
 	builder.addSkip();
 	builder.addDivider();
