@@ -1,4 +1,4 @@
-﻿name: Windows x64 Build
+name: Windows x64 Build
 
 on:
   push:
@@ -16,6 +16,13 @@ jobs:
       run:
         shell: cmd
     steps:
+    - name: Configure Pagefile
+      uses: al-cheb/configure-pagefile-action@v1.4
+      with:
+        minimum-size: 16GB
+        maximum-size: 24GB
+        disk-root: "C:"
+
     - name: Prepare directories
       run: |
         mkdir %GITHUB_WORKSPACE%\TBuild\Libraries\win64

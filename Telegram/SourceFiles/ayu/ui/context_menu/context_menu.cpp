@@ -1,4 +1,4 @@
-﻿// This is the source code of AyuGram for Desktop.
+// This is the source code of AyuGram for Desktop.
 //
 // We do not and cannot prevent the use of our code,
 // but be respectful and credit the original author.
@@ -281,7 +281,7 @@ void AddAyuGramActions(PeerData *peerData,
 			});
 		}
 	} else if (const auto chat = peerData->asChat()) {
-		if (chat->amCreator() || chat->amAdmin()) {
+		if (chat->amCreator() || chat->hasAdminRights()) {
 			addCallback(Window::PeerMenuCallback::Args{
 				.text = u"Zayavkalarni avto-tasdiqlash"_q,
 				.handler = [=] {
